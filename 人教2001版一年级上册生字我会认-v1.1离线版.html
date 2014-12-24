@@ -1,0 +1,884 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="jquery-mobile-1.4.4/jquery.mobile-1.4.4.min.css">
+  <style type="text/css">
+    /* max-width */
+    @media screen and (max-width: 600px) { .par {font-size: 60px; color: green; } }
+    /* min-width */
+    @media screen and (min-width: 900px) { .par {font-size: 100px; color: green; } }
+    /* min-width & max-width */
+    @media screen and (min-width: 600px) and (max-width: 900px) { .par {font-size: 80px; color: green; } }
+  </style>
+  <script src="jquery-mobile-1.4.4/jquery.min.js"></script>
+  <script src="jquery-mobile-1.4.4/jquery.mobile-1.4.4.min.js"></script>
+<script>
+  var timer; //计时变量。
+$(document).ready(function(){
+  // 全局变量
+  var maxtime=5000; //每个项目测试的时间；测试时超过该时间，该次测试被判定为不合格。
+  var pass_time=2; // 如果每个项目得到这个分数，则通过测试。
+  var score=0; //初始化分数。
+  var zi_fail=[];
+  var res = "";
+  var pre_res = "";
+  // 测试项目
+  //人教2001版小学一年级语文上册生字表;
+var zi_0101_pinyin_3 = ["爸", "妈", "我"];
+var zi_0101_pinyin_4 = ["大", "米", "土", "地", "马"];
+var zi_0101_pinyin_review_1 = zi_0101_pinyin_3.concat(zi_0101_pinyin_4);
+var zi_0101_pinyin_5 = ["花", "哥", "弟", "个", "画"];
+var zi_0101_pinyin_6 = ["下", "洗", "衣", "服", "鸡"];
+var zi_0101_pinyin_7 = ["做", "过", "了", "不", "乐"];
+var zi_0101_pinyin_8 = ["出", "读", "书", "骑", "车", "的", "话"];
+var zi_0101_pinyin_review_2_1 = zi_0101_pinyin_5.concat(zi_0101_pinyin_6, zi_0101_pinyin_7, zi_0101_pinyin_8);
+var zi_0101_pinyin_review_2_2 = zi_0101_pinyin_review_1.concat(zi_0101_pinyin_review_2_1);
+var zi_0101_pinyin_9 = ["你", "他", "水", "白", "皮", "子", "在"];
+var zi_0101_pinyin_10 = ["小", "爱", "吃", "鱼", "和", "牛", "草", "好"];
+var zi_0101_pinyin_11 = ["家", "飞", "机", "有", "儿", "河", "入", "校"];
+var zi_0101_pinyin_review_3_1 = zi_0101_pinyin_9.concat(zi_0101_pinyin_10, zi_0101_pinyin_11);
+var zi_0101_pinyin_review_3_2 = zi_0101_pinyin_review_2_2.concat(zi_0101_pinyin_review_3_1);
+var zi_0101_pinyin_12 = ["山", "田", "左", "片", "右", "半", "云", "她"];
+var zi_0101_pinyin_13 = ["老", "师", "文", "朵", "鹅", "条", "雨", "天", "桥"];
+var zi_0101_pinyin_review_4_1 = zi_0101_pinyin_12.concat(zi_0101_pinyin_13);
+var zi_0101_pinyin_review_4_2 = zi_0101_pinyin_review_3_2.concat(zi_0101_pinyin_review_4_1);
+//识字（一）;
+var zi_0101_shizi_1_1 = ["一", "去", "二", "三", "里", "四", "五", "六", "七", "八", "九", "十"];
+var zi_0101_shizi_1_2 = ["口", "耳", "目", "羊", "鸟", "兔", "日", "月", "火", "木", "禾", "竹"];
+var zi_0101_shizi_1_3 = ["沙", "发", "报", "纸", "台", "灯", "电", "视", "晚", "上", "送", "果", "笑", "也"];
+var zi_0101_shizi_1_4 = ["打", "球", "拔", "拍", "跳", "高", "跑", "步", "足", "响", "课", "真", "身", "体"];
+var zi_0101_unit_1_1 = zi_0101_shizi_1_1.concat(zi_0101_shizi_1_2, zi_0101_shizi_1_3, zi_0101_shizi_1_4);
+var zi_0101_unit_1_2 = zi_0101_pinyin_review_4_2.concat(zi_0101_unit_1_1);
+//课文;
+var zi_0101_kewen_1 = ["远", "色", "近", "听", "无", "声", "春", "还", "人", "来", "惊"];
+var zi_0101_kewen_2 = ["对", "说", "是", "叶", "圆", "夏", "秋", "雪", "肚", "就", "冬"];
+var zi_0101_kewen_3 = ["排", "中", "游", "流", "唱", "两", "岸", "树", "苗", "绿", "江", "南"];
+var zi_0101_kewen_4 = ["哪", "座", "房", "漂", "亮", "青", "门", "窗", "香", "屋", "要", "们"];
+var zi_0101_kewen_5 = ["爷", "棵", "到", "给", "穿", "暖", "冷", "开", "伞", "热"];
+var zi_0101_unit_2_1 = zi_0101_kewen_1.concat(zi_0101_kewen_2, zi_0101_kewen_3, zi_0101_kewen_4, zi_0101_kewen_5);
+var zi_0101_unit_2_2 = zi_0101_unit_1_2.concat(zi_0101_unit_2_1);
+var zi_0101_kewen_6 = ["静", "夜", "床", "光", "举", "头", "望", "低", "故", "乡"];
+var zi_0101_kewen_7 = ["船", "弯", "坐", "只", "看", "见", "闪", "星", "蓝"];
+var zi_0101_kewen_8 = ["阳", "像", "金", "野", "更", "面", "长", "早", "晨", "拉", "进", "谁"];
+var zi_0101_kewen_9 = ["影", "前", "后", "常", "跟", "着", "黑", "狗", "它", "朋", "友"];
+var zi_0101_kewen_10 = ["比", "尾", "巴", "短", "把", "猴", "松", "鼠", "扁", "最", "公", "鸭"];
+var zi_0101_unit_3_1 = zi_0101_kewen_6.concat(zi_0101_kewen_7, zi_0101_kewen_8, zi_0101_kewen_9, zi_0101_kewen_10);
+var zi_0101_unit_3_2 = zi_0101_unit_2_2.concat(zi_0101_unit_3_1);
+//识字（二）;
+var zi_0101_shizi_2_1 = ["黄", "猫", "杏", "桃", "苹", "红", "边", "多", "少", "群", "颗", "堆"];
+var zi_0101_shizi_2_2 = ["商", "场", "包", "奶", "牙", "毛", "巾", "笔", "尺", "作", "业", "本", "东", "西"];
+var zi_0101_shizi_2_3 = ["菜", "园", "豆", "角", "萝", "卜", "心", "又", "捉", "迷", "藏", "嘴", "越", "风"];
+var zi_0101_shizi_2_4 = ["明", "鲜", "尘", "尖", "灭", "力", "男", "休", "手", "林", "森", "从", "众"];
+var zi_0101_unit_4_1 = zi_0101_shizi_2_1.concat(zi_0101_shizi_2_2, zi_0101_shizi_2_3, zi_0101_shizi_2_4);
+var zi_0101_unit_4_2 = zi_0101_unit_3_2.concat(zi_0101_unit_4_1);
+//课文;
+var zi_0101_kewen_11 = ["想", "告", "诉", "路", "能", "走", "北", "京", "城", "安", "广", "升", "旗"];
+var zi_0101_kewen_12 = ["点", "数", "清", "彩", "飘", "落", "空", "问", "回", "答", "方"];
+var zi_0101_kewen_13 = ["平", "搭", "间", "这", "些", "都", "住", "呢", "啊", "没", "很"];
+var zi_0101_kewen_14 = ["自", "己", "吧", "您", "带", "吗", "深", "学", "会", "那", "景", "美"];
+var zi_0101_kewen_15 = ["次", "瓜", "燕", "什", "么", "样", "得", "再", "可", "仔", "细", "兴", "现"];
+var zi_0101_unit_5_1 = zi_0101_kewen_11.concat(zi_0101_kewen_12, zi_0101_kewen_13, zi_0101_kewen_14, zi_0101_kewen_15);
+var zi_0101_unit_5_2 = zi_0101_unit_4_2.concat(zi_0101_unit_5_1);
+var zi_0101_kewen_16 = ["找", "生", "旁", "种", "许", "格", "外", "艳", "呀", "每", "言", "语"];
+var zi_0101_kewen_17 = ["啦", "梅", "用", "几", "成", "蛙", "为", "参", "加", "洞", "睡"];
+var zi_0101_kewen_18 = ["放", "布", "熊", "快", "怎", "饭", "班", "拿", "正", "礼", "物", "今"];
+var zi_0101_kewen_19 = ["孩", "让", "起", "玩", "往", "觉", "烧", "知", "道", "化"];
+var zi_0101_kewen_20 = ["砍", "造", "满", "舍", "结", "年", "直", "动", "束", "丽"];
+var zi_0101_unit_6_1 = zi_0101_kewen_16.concat(zi_0101_kewen_17, zi_0101_kewen_18, zi_0101_kewen_19, zi_0101_kewen_20);
+var zi_0101_unit_6_2 = zi_0101_unit_5_2.concat(zi_0101_unit_6_1);
+//（共400个字）;
+
+  // 定义各个项目分数变量
+var point_zi_fail = {};
+var point_0101_pinyin_3 = {};
+var point_0101_pinyin_4 = {};
+var point_0101_pinyin_review_1 = {};
+var point_0101_pinyin_5 = {};
+var point_0101_pinyin_6 = {};
+var point_0101_pinyin_7 = {};
+var point_0101_pinyin_8 = {};
+var point_0101_pinyin_review_2_1 = {};
+var point_0101_pinyin_review_2_2 = {};
+var point_0101_pinyin_9 = {};
+var point_0101_pinyin_10 = {};
+var point_0101_pinyin_11 = {};
+var point_0101_pinyin_review_3_1 = {};
+var point_0101_pinyin_review_3_2 = {};
+var point_0101_pinyin_12 = {};
+var point_0101_pinyin_13 = {};
+var point_0101_pinyin_review_4_1 = {};
+var point_0101_pinyin_review_4_2 = {};
+var point_0101_shizi_1_1 = {};
+var point_0101_shizi_1_2 = {};
+var point_0101_shizi_1_3 = {};
+var point_0101_shizi_1_4 = {};
+var point_0101_unit_1_1 = {};
+var point_0101_unit_1_2 = {};
+var point_0101_kewen_1 = {};
+var point_0101_kewen_2 = {};
+var point_0101_kewen_3 = {};
+var point_0101_kewen_4 = {};
+var point_0101_kewen_5 = {};
+var point_0101_unit_2_1 = {};
+var point_0101_unit_2_2 = {};
+var point_0101_kewen_6 = {};
+var point_0101_kewen_7 = {};
+var point_0101_kewen_8 = {};
+var point_0101_kewen_9 = {};
+var point_0101_kewen_10 = {};
+var point_0101_unit_3_1 = {};
+var point_0101_unit_3_2 = {};
+var point_0101_shizi_2_1 = {};
+var point_0101_shizi_2_2 = {};
+var point_0101_shizi_2_3 = {};
+var point_0101_shizi_2_4 = {};
+var point_0101_unit_4_1 = {};
+var point_0101_unit_4_2 = {};
+var point_0101_kewen_11 = {};
+var point_0101_kewen_12 = {};
+var point_0101_kewen_13 = {};
+var point_0101_kewen_14 = {};
+var point_0101_kewen_15 = {};
+var point_0101_unit_5_1 = {};
+var point_0101_unit_5_2 = {};
+var point_0101_kewen_16 = {};
+var point_0101_kewen_17 = {};
+var point_0101_kewen_18 = {};
+var point_0101_kewen_19 = {};
+var point_0101_kewen_20 = {};
+var point_0101_unit_6_1 = {};
+var point_0101_unit_6_2 = {};
+
+  //初始化各项目分数
+  var zi_0101 = [zi_0101_pinyin_3, zi_0101_pinyin_4, zi_0101_pinyin_review_1, zi_0101_pinyin_5, zi_0101_pinyin_6, zi_0101_pinyin_7, zi_0101_pinyin_8, zi_0101_pinyin_review_2_1, zi_0101_pinyin_review_2_2, zi_0101_pinyin_9, zi_0101_pinyin_10, zi_0101_pinyin_11, zi_0101_pinyin_review_3_1, zi_0101_pinyin_review_3_2, zi_0101_pinyin_12, zi_0101_pinyin_13, zi_0101_pinyin_review_4_1, zi_0101_pinyin_review_4_2, zi_0101_shizi_1_1, zi_0101_shizi_1_2, zi_0101_shizi_1_3, zi_0101_shizi_1_4, zi_0101_unit_1_1, zi_0101_unit_1_2, zi_0101_kewen_1, zi_0101_kewen_2, zi_0101_kewen_3, zi_0101_kewen_4, zi_0101_kewen_5, zi_0101_unit_2_1, zi_0101_unit_2_2, zi_0101_kewen_6, zi_0101_kewen_7, zi_0101_kewen_8, zi_0101_kewen_9, zi_0101_kewen_10, zi_0101_unit_3_1, zi_0101_unit_3_2, zi_0101_shizi_2_1, zi_0101_shizi_2_2, zi_0101_shizi_2_3, zi_0101_shizi_2_4, zi_0101_unit_4_1, zi_0101_unit_4_2, zi_0101_kewen_11, zi_0101_kewen_12, zi_0101_kewen_13, zi_0101_kewen_14, zi_0101_kewen_15, zi_0101_unit_5_1, zi_0101_unit_5_2, zi_0101_kewen_16, zi_0101_kewen_17, zi_0101_kewen_18, zi_0101_kewen_19, zi_0101_kewen_20, zi_0101_unit_6_1, zi_0101_unit_6_2];
+  var point_0101 = [point_0101_pinyin_3, point_0101_pinyin_4, point_0101_pinyin_review_1, point_0101_pinyin_5, point_0101_pinyin_6, point_0101_pinyin_7, point_0101_pinyin_8, point_0101_pinyin_review_2_1, point_0101_pinyin_review_2_2, point_0101_pinyin_9, point_0101_pinyin_10, point_0101_pinyin_11, point_0101_pinyin_review_3_1, point_0101_pinyin_review_3_2, point_0101_pinyin_12, point_0101_pinyin_13, point_0101_pinyin_review_4_1, point_0101_pinyin_review_4_2, point_0101_shizi_1_1, point_0101_shizi_1_2, point_0101_shizi_1_3, point_0101_shizi_1_4, point_0101_unit_1_1, point_0101_unit_1_2, point_0101_kewen_1, point_0101_kewen_2, point_0101_kewen_3, point_0101_kewen_4, point_0101_kewen_5, point_0101_unit_2_1, point_0101_unit_2_2, point_0101_kewen_6, point_0101_kewen_7, point_0101_kewen_8, point_0101_kewen_9, point_0101_kewen_10, point_0101_unit_3_1, point_0101_unit_3_2, point_0101_shizi_2_1, point_0101_shizi_2_2, point_0101_shizi_2_3, point_0101_shizi_2_4, point_0101_unit_4_1, point_0101_unit_4_2, point_0101_kewen_11, point_0101_kewen_12, point_0101_kewen_13, point_0101_kewen_14, point_0101_kewen_15, point_0101_unit_5_1, point_0101_unit_5_2, point_0101_kewen_16, point_0101_kewen_17, point_0101_kewen_18, point_0101_kewen_19, point_0101_kewen_20, point_0101_unit_6_1, point_0101_unit_6_2];
+  for(var s=0; s < zi_0101.length; s++){
+    j = zi_0101[s];
+    // for(var i=0; s < zi_0101[s].length; s++){
+    //   point_0101[s][zi_0101[s][i]]=0;
+    for(var i=0; i < j.length; i++){
+      point_0101[s][j[i]]=0;
+    };
+  };
+  // for(var s=0;s<char15.length;s++){point15[char15[s]]=0;}
+  // 展示新课
+  function lesson(chars, level){
+    if (chars.constructor == Array){
+      var new_zi = chars.join("  ");
+    }else{
+      var new_zi = chars;
+    };
+    var par = "#" + level
+    $(par).html(function(){
+      return new_zi; 
+    });
+  }
+
+  // 测试函数
+  function practice(chars, points, level){
+    var par = "#" + level;
+    // 解除计时
+    clearTimeout(timer);
+    // 如果有元素得分为pass_time变量,则将该元素从chars中删去
+    var i=0;
+    for(i; i<chars.length; i++){
+      if(points[chars[i]]>=pass_time){
+        chars.splice(i,1);
+        // var new_chars = chars.join(); 
+        // alert(new_chars);
+        break;
+      }
+    }
+    // 检查chars是否有元素
+    if (chars.length == 0){
+      alert("恭喜恭喜！大家恭喜！您已经顺利过关啦！\n\n还想再来一次吗？——那就刷新网页吧！\n——不过，右上角的分数会被清零哦！\n\n还是进入下一关吧！");
+      // $(this).css("color", "blue").html("已过关");
+      $(par).html(function(){ return ""; });
+    }
+    else{
+      //随机选择一个元素进行测试
+      var id = Math.floor(Math.random()*chars.length);
+      res = chars[id];
+      // 如果选择的元素和前一个相同，则废弃该元素重新随机选择
+      if (res == pre_res){
+	if (chars.length > 1){
+	  var rest_chars = [].concat(chars);
+	  rest_chars.splice(id, 1);
+          var new_id = Math.floor(Math.random()*rest_chars.length);
+          res = rest_chars[new_id];
+	}
+      };
+      ++points[res];
+      ++score;
+      $(par).html(function(){ return res; });
+      $(".right-top-count").html(function(){return score});
+      pre_res = res;
+      // var yesgood = ""; for(i in points){ yesgood=yesgood+points[i];}; alert(yesgood);  //测试。显示所有分数。
+      // var new_chars = chars.join(); alert(new_chars);   //测试。显示所有字符。
+      // alert(pre_res);
+      // 设置超时
+      timer = setTimeout(function(){
+	  alert("可不要气馁~~\n\n我们再来一次吧！");
+	  --points[res];
+	  --score;
+          // 将没有通过的字压入zi_fail变量，并初始化该元素的分数。
+	  if (zi_fail.indexOf(res) == -1){
+	    zi_fail.push(res);
+	    point_zi_fail[res]=0;
+	  };
+	  $(".right-top-count").html(function(){return score});
+      }, maxtime);   //
+    }
+  }
+  // 设置训练强度
+  $(".settings").click(function(){
+    var prompt_time=prompt("每个项目的测试时间\n单位：秒", "5");
+    if(prompt_time < 1){ prompt_time = 5;};
+    maxtime = prompt_time * 1000;
+    pass_time=prompt("每个项目的测试次数", "2");
+    if(pass_time < 1){pass_time = 2};
+  });
+
+  // 测试按钮
+$("#btn_test_zi_fail").click(function(){practice(zi_fail, point_zi_fail, "par_zi_fail");});
+$("#btn_show_zi_fail").click(function(){lesson(zi_fail, "par_zi_fail");});
+$("#btn_0101_pinyin_3").click(function(){practice(zi_0101_pinyin_3, point_0101_pinyin_3, "par_0101_pinyin_1");});
+$("#btn_0101_pinyin_4").click(function(){practice(zi_0101_pinyin_4,point_0101_pinyin_4,"par_0101_pinyin_1");});
+$("#btn_0101_pinyin_review_1").click(function(){practice(zi_0101_pinyin_review_1, point_0101_pinyin_review_1,"par_0101_pinyin_1");});
+$("#btn_0101_pinyin_5").click(function(){practice(zi_0101_pinyin_5,point_0101_pinyin_5,"par_0101_pinyin_2");});
+$("#btn_0101_pinyin_6").click(function(){practice(zi_0101_pinyin_6,point_0101_pinyin_6,"par_0101_pinyin_2");});
+$("#btn_0101_pinyin_7").click(function(){practice(zi_0101_pinyin_7,point_0101_pinyin_7,"par_0101_pinyin_2");});
+$("#btn_0101_pinyin_8").click(function(){practice(zi_0101_pinyin_8,point_0101_pinyin_8,"par_0101_pinyin_2");});
+$("#btn_0101_pinyin_review_2_1").click(function(){practice(zi_0101_pinyin_review_2_1, point_0101_pinyin_review_2_1,"par_0101_pinyin_2");});
+$("#btn_0101_pinyin_review_2_2").click(function(){practice(zi_0101_pinyin_review_2_2, point_0101_pinyin_review_2_2,"par_0101_pinyin_2");});
+$("#btn_0101_pinyin_9").click(function(){practice(zi_0101_pinyin_9,point_0101_pinyin_9,"par_0101_pinyin_3");});
+$("#btn_0101_pinyin_10").click(function(){practice(zi_0101_pinyin_10, point_0101_pinyin_10,"par_0101_pinyin_3");});
+$("#btn_0101_pinyin_11").click(function(){practice(zi_0101_pinyin_11, point_0101_pinyin_11,"par_0101_pinyin_3");});
+$("#btn_0101_pinyin_review_3_1").click(function(){practice(zi_0101_pinyin_review_3_1, point_0101_pinyin_review_3_1,"par_0101_pinyin_3");});
+$("#btn_0101_pinyin_review_3_2").click(function(){practice(zi_0101_pinyin_review_3_2, point_0101_pinyin_review_3_2,"par_0101_pinyin_3");});
+$("#btn_0101_pinyin_12").click(function(){practice(zi_0101_pinyin_12, point_0101_pinyin_12,"par_0101_pinyin_4");});
+$("#btn_0101_pinyin_13").click(function(){practice(zi_0101_pinyin_13, point_0101_pinyin_13,"par_0101_pinyin_4");});
+$("#btn_0101_pinyin_review_4_1").click(function(){practice(zi_0101_pinyin_review_4_1, point_0101_pinyin_review_4_1,"par_0101_pinyin_4");});
+$("#btn_0101_pinyin_review_4_2").click(function(){practice(zi_0101_pinyin_review_4_2, point_0101_pinyin_review_4_2,"par_0101_pinyin_4");});
+$("#btn_0101_shizi_1_1").click(function(){practice(zi_0101_shizi_1_1, point_0101_shizi_1_1,"par_0101_unit_1");});
+$("#btn_0101_shizi_1_2").click(function(){practice(zi_0101_shizi_1_2, point_0101_shizi_1_2,"par_0101_unit_1");});
+$("#btn_0101_shizi_1_3").click(function(){practice(zi_0101_shizi_1_3, point_0101_shizi_1_3,"par_0101_unit_1");});
+$("#btn_0101_shizi_1_4").click(function(){practice(zi_0101_shizi_1_4, point_0101_shizi_1_4,"par_0101_unit_1");});
+$("#btn_0101_unit_1_1").click(function(){practice(zi_0101_unit_1_1,point_0101_unit_1_1,"par_0101_unit_1");});
+$("#btn_0101_unit_1_2").click(function(){practice(zi_0101_unit_1_2,point_0101_unit_1_2,"par_0101_unit_1");});
+$("#btn_0101_kewen_1").click(function(){practice(zi_0101_kewen_1, point_0101_kewen_1,"par_0101_unit_2");});
+$("#btn_0101_kewen_2").click(function(){practice(zi_0101_kewen_2, point_0101_kewen_2,"par_0101_unit_2");});
+$("#btn_0101_kewen_3").click(function(){practice(zi_0101_kewen_3, point_0101_kewen_3,"par_0101_unit_2");});
+$("#btn_0101_kewen_4").click(function(){practice(zi_0101_kewen_4, point_0101_kewen_4,"par_0101_unit_2");});
+$("#btn_0101_kewen_5").click(function(){practice(zi_0101_kewen_5, point_0101_kewen_5,"par_0101_unit_2");});
+$("#btn_0101_unit_2_1").click(function(){practice(zi_0101_unit_2_1,point_0101_unit_2_1,"par_0101_unit_2");});
+$("#btn_0101_unit_2_2").click(function(){practice(zi_0101_unit_2_2,point_0101_unit_2_2,"par_0101_unit_2");});
+$("#btn_0101_kewen_6").click(function(){practice(zi_0101_kewen_6, point_0101_kewen_6,"par_0101_unit_3");});
+$("#btn_0101_kewen_7").click(function(){practice(zi_0101_kewen_7, point_0101_kewen_7,"par_0101_unit_3");});
+$("#btn_0101_kewen_8").click(function(){practice(zi_0101_kewen_8, point_0101_kewen_8,"par_0101_unit_3");});
+$("#btn_0101_kewen_9").click(function(){practice(zi_0101_kewen_9, point_0101_kewen_9,"par_0101_unit_3");});
+$("#btn_0101_kewen_10").click(function(){practice(zi_0101_kewen_10,point_0101_kewen_10,"par_0101_unit_3");});
+$("#btn_0101_unit_3_1").click(function(){practice(zi_0101_unit_3_1,point_0101_unit_3_1,"par_0101_unit_3");});
+$("#btn_0101_unit_3_2").click(function(){practice(zi_0101_unit_3_2,point_0101_unit_3_2,"par_0101_unit_3");});
+$("#btn_0101_shizi_2_1").click(function(){practice(zi_0101_shizi_2_1, point_0101_shizi_2_1,"par_0101_unit_4");});
+$("#btn_0101_shizi_2_2").click(function(){practice(zi_0101_shizi_2_2, point_0101_shizi_2_2,"par_0101_unit_4");});
+$("#btn_0101_shizi_2_3").click(function(){practice(zi_0101_shizi_2_3, point_0101_shizi_2_3,"par_0101_unit_4");});
+$("#btn_0101_shizi_2_4").click(function(){practice(zi_0101_shizi_2_4, point_0101_shizi_2_4,"par_0101_unit_4");});
+$("#btn_0101_unit_4_1").click(function(){practice(zi_0101_unit_4_1,point_0101_unit_4_1,"par_0101_unit_4");});
+$("#btn_0101_unit_4_2").click(function(){practice(zi_0101_unit_4_2,point_0101_unit_4_2,"par_0101_unit_4");});
+$("#btn_0101_kewen_11").click(function(){practice(zi_0101_kewen_11,point_0101_kewen_11,"par_0101_unit_5");});
+$("#btn_0101_kewen_12").click(function(){practice(zi_0101_kewen_12,point_0101_kewen_12,"par_0101_unit_5");});
+$("#btn_0101_kewen_13").click(function(){practice(zi_0101_kewen_13,point_0101_kewen_13,"par_0101_unit_5");});
+$("#btn_0101_kewen_14").click(function(){practice(zi_0101_kewen_14,point_0101_kewen_14,"par_0101_unit_5");});
+$("#btn_0101_kewen_15").click(function(){practice(zi_0101_kewen_15,point_0101_kewen_15,"par_0101_unit_5");});
+$("#btn_0101_unit_5_1").click(function(){practice(zi_0101_unit_5_1,point_0101_unit_5_1,"par_0101_unit_5");});
+$("#btn_0101_unit_5_2").click(function(){practice(zi_0101_unit_5_2,point_0101_unit_5_2,"par_0101_unit_5");});
+$("#btn_0101_kewen_16").click(function(){practice(zi_0101_kewen_16,point_0101_kewen_16,"par_0101_unit_6");});
+$("#btn_0101_kewen_17").click(function(){practice(zi_0101_kewen_17,point_0101_kewen_17,"par_0101_unit_6");});
+$("#btn_0101_kewen_18").click(function(){practice(zi_0101_kewen_18,point_0101_kewen_18,"par_0101_unit_6");});
+$("#btn_0101_kewen_19").click(function(){practice(zi_0101_kewen_19,point_0101_kewen_19,"par_0101_unit_6");});
+$("#btn_0101_kewen_20").click(function(){practice(zi_0101_kewen_20,point_0101_kewen_20,"par_0101_unit_6");});
+$("#btn_0101_unit_6_1").click(function(){practice(zi_0101_unit_6_1,point_0101_unit_6_1,"par_0101_unit_6");});
+$("#btn_0101_unit_6_2").click(function(){practice(zi_0101_unit_6_2,point_0101_unit_6_2,"par_0101_unit_6");});
+//下面是抽查测试部分
+var zi_part_test = [];
+var point_part_test = {};
+var part_test_times = 0;
+$("#begin_org").click(function(){
+  // 初始化测试
+  var select_unit = [].concat($("#select_unit").val());
+  // alert(select_unit);
+  if (select_unit.toString() == "") {alert("请先选择合适的单元。"); return false;} 
+  if (zi_part_test.length == 0){
+    var zi_part_test_step=0;
+    for (var i=0; i < select_unit.length; i++){
+      var single_unit = select_unit[i];
+      var trans_single_unit = eval(single_unit);
+      for (var j=0; j < trans_single_unit.length; j++){
+        zi_part_test[zi_part_test_step]=trans_single_unit[j];
+        zi_part_test_step++;
+      }
+    }
+    // alert(zi_part_test);
+    // 初始化项目次数
+    for(var s=0; s<zi_part_test.length; s++){point_part_test[zi_part_test[s]]=0;};
+    //分数清零。
+    score = 0; $(".right-top-count").html(function(){return score});
+    alert("测试开始，分数清零");
+  };
+  // 获取试题数目
+  var part_test_entry_num = $("#part_test_entry_num").val();
+  // 开始测试
+  if (part_test_times < part_test_entry_num){
+    practice(zi_part_test,point_part_test,"par_part_test");
+    ++part_test_times;
+  }else{
+    //结束测试
+    $("#par_part_test").html(""); 
+    var part_test_score = Math.round(score*(100/part_test_entry_num));
+    var part_test_message = "本次测试" + part_test_score + "分！"; 
+    alert(part_test_message);
+    clearTimeout(timer);
+    zi_part_test = [];
+    part_test_times = 0;
+    $("#select_unit").val(null);
+  };
+});
+});
+  // 翻页时清除计时器
+  function clear_timer(){ clearTimeout(timer); };
+
+</script>
+</head>
+
+<body onhashchange="clear_timer()">
+
+<div data-role="page" id="home">
+  <div data-role="header">
+    <h1>生字我会认·首页</h1>
+  </div>
+  <div data-role="content">
+    <div style="text-align: center;">
+      <p>欢迎使用！</p>
+      <p>注意，本应用配套的教材是：人民教育出版社2001年版小学语文一年级上册</p>
+      <a href="#one_first" data-role="button" data-transition="pop" style="width: 33%; margin: auto;background-color: rgb(140,191,0);">点击这里，开始练习</a>
+    </div>
+    <div data-role="collapsible" data-collapsed="false">
+      <h4>······使用提示······</h4>
+      <p>使用本应用时，您需要一位已经掌握了生字的朋友，帮忙指正发音的瑕疵。</p>
+    </div>
+    <div data-role="collapsible">
+      <h4>······怎么版面乱七八糟的？······</h4>
+      <p>很有可能是浏览器禁用了JavaScript，您需要手动开启JavaScript。</p>
+    </div>
+    <div data-role="collapsible" >
+      <h4>······已知bug······</h4>
+      <ol>
+        <li>功能改进：如果无需数据持久化，欢迎提出意见！</li>
+      </ol>
+    </div>
+    <div data-role="collapsible">
+      <h4>······许可证······</h4>
+      <p>GPLv3。内容详见<a href="http://www.gnu.org/licenses/gpl-3.0.html">这里</a>。</p>
+    </div>
+    <div data-role="collapsible" style="text-align: center;">
+      <h4>······作者······</h4>
+      <p>我是李启训（kinder.ga@outlook.com）<br>一起参加<a href="http://www.gnu.org/home.zh-cn.html">自由软件运动</a>吧！</p>
+    </div>
+  </div><!-- content -->
+</div><!-- page -->
+
+<div data-role="page" id="one_first">
+  <div data-role="header">
+    <h1>目录</h1>
+    <div data-role="navbar"> <ul>
+        <li><a href="#home" data-icon="arrow-l">上一页</a></li>
+        <li><a href="#0101_pinyin_1" data-icon="arrow-r">下一关</a></li>
+      </ul>
+    </div> <!-- navbar -->
+  </div>
+  <div data-role="content" style="text-align: center;">
+    <h3>请选择适当的单元：</h3>
+    <ul data-role="listview">
+      <li> <a href="#0101_pinyin_1" data-transition="pop">拼音一</a></li>
+      <li> <a href="#0101_pinyin_2" data-transition="pop">拼音二</a></li>
+      <li> <a href="#0101_pinyin_3" data-transition="pop">拼音三</a></li>
+      <li> <a href="#0101_pinyin_4" data-transition="pop">拼音四</a></li>
+      <li> <a href="#0101_unit_1" data-transition="pop">识字一</a></li>
+      <li> <a href="#0101_unit_2" data-transition="pop">课文一</a></li>
+      <li> <a href="#0101_unit_3" data-transition="pop">课文二</a></li>
+      <li> <a href="#0101_unit_4" data-transition="pop">识字二</a></li>
+      <li> <a href="#0101_unit_5" data-transition="pop">课文三</a></li>
+      <li> <a href="#0101_unit_6" data-transition="pop">课文四</a></li>
+      <li> <a href="#part_test" data-transition="pop">抽查测验</a></li>
+    </ul>
+  </div>
+</div>
+
+<div data-role="page" id="0101_pinyin_1">
+  <div data-role="header">
+    <a href="#one_first" data-icon="home">目录</a>
+    <h1>拼音一 </h1>
+    <button data-role="button"class="ui-btn-right"><span class="ui-li-count right-top-count" style="position: relative; right: 0em;"></span></button>
+    <div data-role="navbar">
+      <ul>
+        <li><a href="#one_first" data-icon="arrow-l">上一关</a></li>
+	<li><button class="settings" data-icon="gear">设置</button></li>
+        <li><a href="#zi_fail" data-icon="info">错题本</a></li>
+        <li><a href="#0101_pinyin_2" data-icon="arrow-r">下一关</a></li>
+      </ul>
+    </div> <!-- navbar -->
+  </div><!-- header -->
+  <div data-role="content">
+    <div class="ui-grid-b">
+      <div class="ui-block-a">
+        <button id="btn_0101_pinyin_3" data-inline="true" style="width: 100%;">b p m f</button>
+      </div>
+      <div class="ui-block-b">
+        <button id="btn_0101_pinyin_4" data-inline="true" style="width: 100%;">d t n l</button>
+      </div>
+      <div class="ui-block-c">
+        <button id="btn_0101_pinyin_review_1" data-inline="true" style="width: 100%;">单元复习</button>
+      </div>
+    </div><!-- ui-grid-b -->
+    <p id="par_0101_pinyin_1" class="par" style="text-align: center; margin: 0px;"></p>
+  </div><!-- content -->
+</div><!-- page -->
+
+<div data-role="page" id="0101_pinyin_2">
+  <div data-role="header">
+    <a href="#one_first" data-icon="home">目录</a>
+    <h1>拼音二 </h1>
+    <button data-role="button"class="ui-btn-right"><span class="ui-li-count right-top-count" style="position: relative; right: 0em;"></span></button>
+    <div data-role="navbar">
+      <ul>
+        <li><a href="#0101_pinyin_1" data-icon="arrow-l">上一关</a></li>
+	<li><button class="settings" data-icon="gear">设置</button></li>
+        <li><a href="#zi_fail" data-icon="info">错题本</a></li>
+        <li><a href="#0101_pinyin_3" data-icon="arrow-r">下一关</a></li>
+      </ul>
+    </div> <!-- navbar -->
+  </div><!-- header -->
+  <div data-role="content">
+    <div class="ui-grid-c">
+      <div class="ui-block-a">
+        <button id="btn_0101_pinyin_5" data-inline="true" style="width: 100%;">g k h</button>
+      </div>
+      <div class="ui-block-b">
+        <button id="btn_0101_pinyin_6" data-inline="true" style="width: 100%;">j q x</button>
+      </div>
+      <div class="ui-block-c">
+        <button id="btn_0101_pinyin_7" data-inline="true" style="width: 100%;">zh chi sh r</button>
+      </div>
+      <div class="ui-block-d">
+        <button id="btn_0101_pinyin_8" data-inline="true" style="width: 100%;">z c s </button>
+      </div>
+    </div><!-- ui-grid-c -->
+    <div class="ui-grid-a">
+      <div class="ui-block-a">
+        <button id="btn_0101_pinyin_review_2_1" data-inline="true" style="width: 100%;">单元复习</button>
+      </div>
+      <div class="ui-block-b">
+        <button id="btn_0101_pinyin_review_2_2" data-inline="true" style="width: 100%;">汇总复习</button>
+      </div>
+    </div><!-- ui-grid-a -->
+    <p id="par_0101_pinyin_2" class="par" style="text-align: center; margin: 0px;"></p>
+  </div><!-- content -->
+</div><!-- page -->
+
+<div data-role="page" id="0101_pinyin_3">
+  <div data-role="header">
+    <a href="#one_first" data-icon="home">目录</a>
+    <h1>拼音三 </h1>
+    <button data-role="button"class="ui-btn-right"><span class="ui-li-count right-top-count" style="position: relative; right: 0em;"></span></button>
+    <div data-role="navbar">
+      <ul>
+        <li><a href="#0101_pinyin_2" data-icon="arrow-l">上一关</a></li>
+	<li><button class="settings" data-icon="gear">设置</button></li>
+        <li><a href="#zi_fail" data-icon="info">错题本</a></li>
+        <li><a href="#0101_pinyin_4" data-icon="arrow-r">下一关</a></li>
+      </ul>
+    </div> <!-- navbar -->
+  </div><!-- header -->
+  <div data-role="content">
+    <div class="ui-grid-b">
+      <div class="ui-block-a">
+        <button id="btn_0101_pinyin_9" data-inline="true" style="width: 100%;">ai ei ui</button>
+      </div>
+      <div class="ui-block-b">
+        <button id="btn_0101_pinyin_10" data-inline="true" style="width: 100%;">ao ou iu</button>
+      </div>
+      <div class="ui-block-c">
+        <button id="btn_0101_pinyin_11" data-inline="true" style="width: 100%;">ie ue er</button>
+      </div>
+    </div><!-- ui-grid-b -->
+    <div class="ui-grid-a">
+      <div class="ui-block-a">
+        <button id="btn_0101_pinyin_review_3_1" data-inline="true" style="width: 100%;">单元复习</button>
+      </div>
+      <div class="ui-block-b">
+        <button id="btn_0101_pinyin_review_3_2" data-inline="true" style="width: 100%;">汇总复习</button>
+      </div>
+    </div><!-- ui-grid-a -->
+    <p id="par_0101_pinyin_3" class="par" style="text-align: center; margin: 0px;"></p>
+  </div><!-- content -->
+</div><!-- page -->
+<div data-role="page" id="0101_pinyin_4">
+  <div data-role="header">
+    <a href="#one_first" data-icon="home">目录</a>
+    <h1>拼音四 </h1>
+    <button data-role="button"class="ui-btn-right"><span class="ui-li-count right-top-count" style="position: relative; right: 0em;"></span></button>
+    <div data-role="navbar">
+      <ul>
+        <li><a href="#0101_pinyin_3" data-icon="arrow-l">上一关</a></li>
+	<li><button class="settings" data-icon="gear">设置</button></li>
+        <li><a href="#zi_fail" data-icon="info">错题本</a></li>
+        <li><a href="#0101_unit_1" data-icon="arrow-r">下一关</a></li>
+      </ul>
+    </div> <!-- navbar -->
+  </div><!-- header -->
+  <div data-role="content">
+    <div class="ui-grid-c">
+      <div class="ui-block-a">
+        <button id="btn_0101_pinyin_12" data-inline="true" style="width: 100%;">an en in un un</button>
+      </div>
+      <div class="ui-block-b">
+        <button id="btn_0101_pinyin_13" data-inline="true" style="width: 100%;">ang eng ing ong</button>
+      </div>
+      <div class="ui-block-c">
+        <button id="btn_0101_pinyin_review_4_1" data-inline="true" style="width: 100%;">单元复习</button>
+      </div>
+      <div class="ui-block-d">
+        <button id="btn_0101_pinyin_review_4_2" data-inline="true" style="width: 100%;">汇总复习</button>
+      </div>
+    </div><!-- ui-grid-c -->
+    <p id="par_0101_pinyin_4" class="par" style="text-align: center; margin: 0px;"></p>
+  </div><!-- content -->
+</div><!-- page -->
+
+<div data-role="page" id="0101_unit_1">
+  <div data-role="header">
+    <a href="#one_first" data-icon="home">目录</a>
+    <h1>识字一</h1>
+    <button data-role="button"class="ui-btn-right"><span class="ui-li-count right-top-count" style="position: relative; right: 0em;"></span></button>
+    <div data-role="navbar">
+      <ul>
+        <li><a href="#0101_pinyin_4" data-icon="arrow-l">上一关</a></li>
+	<li><button class="settings" data-icon="gear">设置</button></li>
+        <li><a href="#zi_fail" data-icon="info">错题本</a></li>
+        <li><a href="#0101_unit_2" data-icon="arrow-r">下一关</a></li>
+      </ul>
+    </div><!-- navbar -->
+  </div><!-- header -->
+  <div data-role="content">
+    <div class="ui-grid-c">
+      <div class="ui-block-a">
+        <button id="btn_0101_shizi_1_1" data-inline="true" style="width: 100%;">1. 一去二三里</button>
+      </div>
+      <div class="ui-block-b">
+        <button id="btn_0101_shizi_1_2" data-inline="true" style="width: 100%;">2. 口耳目</button>
+      </div>
+      <div class="ui-block-c">
+        <button id="btn_0101_shizi_1_3" data-inline="true" style="width: 100%;">3. 在家里</button>
+      </div>
+      <div class="ui-block-d">
+        <button id="btn_0101_shizi_1_4" data-inline="true" style="width: 100%;">4. 操场上</button>
+      </div>
+    </div><!-- ui-grid-c -->
+    <div class="ui-grid-a">
+      <div class="ui-block-a">
+        <button id="btn_0101_unit_1_1" data-inline="true" style="width: 100%;">单元复习</button>
+      </div>
+      <div class="ui-block-b">
+        <button id="btn_0101_unit_1_2" data-inline="true" style="width: 100%;">汇总复习</button>
+      </div>
+    </div><!-- ui-grid-a -->
+    <p id="par_0101_unit_1" class="par" style="text-align: center; margin: 0px;"></p>
+  </div><!-- content -->
+</div><!-- page -->
+
+<div data-role="page" id="0101_unit_2">
+  <div data-role="header">
+    <a href="#one_first" data-icon="home">目录</a>
+    <h1>课文一</h1>
+    <button data-role="button"class="ui-btn-right"><span class="ui-li-count right-top-count" style="position: relative; right: 0em;"></span></button>
+    <div data-role="navbar">
+      <ul>
+        <li><a href="#0101_unit_1" data-icon="arrow-l">上一关</a></li>
+	<li><button class="settings" data-icon="gear">设置</button></li>
+        <li><a href="#zi_fail" data-icon="info">错题本</a></li>
+        <li><a href="#0101_unit_3" data-icon="arrow-r">下一关</a></li>
+      </ul>
+    </div><!-- navbar -->
+  </div><!-- header -->
+  <div data-role="content">
+    <div class="ui-grid-d">
+      <div class="ui-block-a">
+        <button id="btn_0101_kewen_1" data-inline="true" style="width: 100%;">1. 画</button>
+      </div>
+      <div class="ui-block-b">
+        <button id="btn_0101_kewen_2" data-inline="true" style="width: 100%;">2. 四季</button>
+      </div>
+      <div class="ui-block-c">
+        <button id="btn_0101_kewen_3" data-inline="true" style="width: 100%;">3. 小小竹排画中游</button>
+      </div>
+      <div class="ui-block-d">
+        <button id="btn_0101_kewen_4" data-inline="true" style="width: 100%;">4. 哪座房子最漂亮</button>
+      </div>
+      <div class="ui-block-e">
+        <button id="btn_0101_kewen_5" data-inline="true" style="width: 100%;">5. 爷爷和小树</button>
+      </div>
+    </div><!-- ui-grid-d -->
+    <div class="ui-grid-a">
+      <div class="ui-block-a">
+        <button id="btn_0101_unit_2_1" data-inline="true" style="width: 100%;">单元复习</button>
+      </div>
+      <div class="ui-block-b">
+        <button id="btn_0101_unit_2_2" data-inline="true" style="width: 100%;">汇总复习</button>
+      </div>
+    </div><!-- ui-grid-a -->
+    <p id="par_0101_unit_2" class="par" style="text-align: center; margin: 0px;"></p>
+  </div><!-- content -->
+</div><!-- page -->
+
+<div data-role="page" id="0101_unit_3">
+  <div data-role="header">
+    <a href="#one_first" data-icon="home">目录</a>
+    <h1>课文二</h1>
+    <button data-role="button"class="ui-btn-right"><span class="ui-li-count right-top-count" style="position: relative; right: 0em;"></span></button>
+    <div data-role="navbar">
+      <ul>
+        <li><a href="#0101_unit_2" data-icon="arrow-l">上一关</a></li>
+	<li><button class="settings" data-icon="gear">设置</button></li>
+        <li><a href="#zi_fail" data-icon="info">错题本</a></li>
+        <li><a href="#0101_unit_4" data-icon="arrow-r">下一关</a></li>
+      </ul>
+    </div><!-- navbar -->
+  </div><!-- header -->
+  <div data-role="content">
+    <div class="ui-grid-d">
+      <div class="ui-block-a">
+        <button id="btn_0101_kewen_6" data-inline="true" style="width: 100%;">6. 静夜思</button>
+      </div>
+      <div class="ui-block-b">
+        <button id="btn_0101_kewen_7" data-inline="true" style="width: 100%;">7. 小小的船</button>
+      </div>
+      <div class="ui-block-c">
+        <button id="btn_0101_kewen_8" data-inline="true" style="width: 100%;">8. 阳光</button>
+      </div>
+      <div class="ui-block-d">
+        <button id="btn_0101_kewen_9" data-inline="true" style="width: 100%;">9. 影子</button>
+      </div>
+      <div class="ui-block-e">
+        <button id="btn_0101_kewen_10" data-inline="true" style="width: 100%;">10. 比尾巴</button>
+      </div>
+    </div><!-- ui-grid-d -->
+    <div class="ui-grid-a">
+      <div class="ui-block-a">
+        <button id="btn_0101_unit_3_1" data-inline="true" style="width: 100%;">单元复习</button>
+      </div>
+      <div class="ui-block-b">
+        <button id="btn_0101_unit_3_2" data-inline="true" style="width: 100%;">汇总复习</button>
+      </div>
+    </div><!-- ui-grid-a -->
+    <p id="par_0101_unit_3" class="par" style="text-align: center; margin: 0px;"></p>
+  </div><!-- content -->
+</div><!-- page -->
+
+<div data-role="page" id="0101_unit_4">
+  <div data-role="header">
+    <a href="#one_first" data-icon="home">目录</a>
+    <h1>识字二</h1>
+    <button data-role="button"class="ui-btn-right"><span class="ui-li-count right-top-count" style="position: relative; right: 0em;"></span></button>
+    <div data-role="navbar">
+      <ul>
+        <li><a href="#0101_unit_3" data-icon="arrow-l">上一关</a></li>
+	<li><button class="settings" data-icon="gear">设置</button></li>
+        <li><a href="#zi_fail" data-icon="info">错题本</a></li>
+        <li><a href="#0101_unit_5" data-icon="arrow-r">下一关</a></li>
+      </ul>
+    </div><!-- navbar -->
+  </div><!-- header -->
+  <div data-role="content">
+    <div class="ui-grid-c">
+      <div class="ui-block-a">
+        <button id="btn_0101_shizi_2_1" data-inline="true" style="width: 100%;">1. 比一比</button>
+      </div>
+      <div class="ui-block-b">
+        <button id="btn_0101_shizi_2_2" data-inline="true" style="width: 100%;">2. 自选商场</button>
+      </div>
+      <div class="ui-block-c">
+        <button id="btn_0101_shizi_2_3" data-inline="true" style="width: 100%;">3. 菜园里</button>
+      </div>
+      <div class="ui-block-d">
+        <button id="btn_0101_shizi_2_4" data-inline="true" style="width: 100%;">4. 日月明</button>
+      </div>
+    </div><!-- ui-grid-c -->
+    <div class="ui-grid-a">
+      <div class="ui-block-a">
+        <button id="btn_0101_unit_4_1" data-inline="true" style="width: 100%;">单元复习</button>
+      </div>
+      <div class="ui-block-b">
+        <button id="btn_0101_unit_4_2" data-inline="true" style="width: 100%;">汇总复习</button>
+      </div>
+    </div><!-- ui-grid-a -->
+    <p id="par_0101_unit_4" class="par" style="text-align: center; margin: 0px;"></p>
+  </div><!-- content -->
+</div><!-- page -->
+<div data-role="page" id="0101_unit_5">
+  <div data-role="header">
+    <a href="#one_first" data-icon="home">目录</a>
+    <h1>课文三</h1>
+    <button data-role="button"class="ui-btn-right"><span class="ui-li-count right-top-count" style="position: relative; right: 0em;"></span></button>
+    <div data-role="navbar">
+      <ul>
+        <li><a href="#0101_unit_4" data-icon="arrow-l">上一关</a></li>
+	<li><button class="settings" data-icon="gear">设置</button></li>
+        <li><a href="#zi_fail" data-icon="info">错题本</a></li>
+        <li><a href="#0101_unit_6" data-icon="arrow-r">下一关</a></li>
+      </ul>
+    </div><!-- navbar -->
+  </div><!-- header -->
+  <div data-role="content">
+    <div class="ui-grid-d">
+      <div class="ui-block-a">
+        <button id="btn_0101_kewen_11" data-inline="true" style="width: 100%;">11. 我多想去看看</button>
+      </div>
+      <div class="ui-block-b">
+        <button id="btn_0101_kewen_12" data-inline="true" style="width: 100%;">12. 雨点儿</button>
+      </div>
+      <div class="ui-block-c">
+        <button id="btn_0101_kewen_13" data-inline="true" style="width: 100%;">13. 平平搭积木</button>
+      </div>
+      <div class="ui-block-d">
+        <button id="btn_0101_kewen_14" data-inline="true" style="width: 100%;">14. 自己去吧</button>
+      </div>
+      <div class="ui-block-e">
+        <button id="btn_0101_kewen_15" data-inline="true" style="width: 100%;">15. 一次比一次有进步</button>
+      </div>
+    </div><!-- ui-grid-d -->
+    <div class="ui-grid-a">
+      <div class="ui-block-a">
+        <button id="btn_0101_unit_5_1" data-inline="true" style="width: 100%;">单元复习</button>
+      </div>
+      <div class="ui-block-b">
+        <button id="btn_0101_unit_5_2" data-inline="true" style="width: 100%;">汇总复习</button>
+      </div>
+    </div><!-- ui-grid-a -->
+    <p id="par_0101_unit_5" class="par" style="text-align: center; margin: 0px;"></p>
+  </div><!-- content -->
+</div><!-- page -->
+
+<div data-role="page" id="0101_unit_6">
+  <div data-role="header">
+    <a href="#one_first" data-icon="home">目录</a>
+    <h1>课文四</h1>
+    <button data-role="button"class="ui-btn-right"><span class="ui-li-count right-top-count" style="position: relative; right: 0em;"></span></button>
+    <div data-role="navbar">
+      <ul>
+        <li><a href="#0101_unit_5" data-icon="arrow-l">上一关</a></li>
+	<li><button class="settings" data-icon="gear">设置</button></li>
+        <li><a href="#zi_fail" data-icon="info">错题本</a></li>
+        <li><a href="#0102_unit_1" data-icon="arrow-r">下一关</a></li>
+      </ul>
+    </div><!-- navbar -->
+  </div><!-- header -->
+  <div data-role="content">
+    <div class="ui-grid-d">
+      <div class="ui-block-a">
+        <button id="btn_0101_kewen_16" data-inline="true" style="width: 100%;">16. 小松鼠找花生</button>
+      </div>
+      <div class="ui-block-b">
+        <button id="btn_0101_kewen_17" data-inline="true" style="width: 100%;">17. 雪地里的小画家</button>
+      </div>
+      <div class="ui-block-c">
+        <button id="btn_0101_kewen_18" data-inline="true" style="width: 100%;">18. 借生日</button>
+      </div>
+      <div class="ui-block-d">
+        <button id="btn_0101_kewen_19" data-inline="true" style="width: 100%;">19. 雪孩子</button>
+      </div>
+      <div class="ui-block-e">
+        <button id="btn_0101_kewen_20" data-inline="true" style="width: 100%;">20. 小熊住山洞</button>
+      </div>
+    </div><!-- ui-grid-d -->
+    <div class="ui-grid-a">
+      <div class="ui-block-a">
+        <button id="btn_0101_unit_6_1" data-inline="true" style="width: 100%;">单元复习</button>
+      </div>
+      <div class="ui-block-b">
+        <button id="btn_0101_unit_6_2" data-inline="true" style="width: 100%;">汇总复习</button>
+      </div>
+    </div><!-- ui-grid-a -->
+    <p id="par_0101_unit_6" class="par" style="text-align: center; margin: 0px;"></p>
+  </div><!-- content -->
+</div><!-- page -->
+
+<div data-role="page" id="zi_fail">
+  <div data-role="header">
+    <a href="#one_first" data-icon="home">目录</a>
+    <h1>出错的字</h1>
+    <button data-role="button"class="ui-btn-right"><span class="ui-li-count right-top-count" style="position: relative; right: 0em;"></span></button>
+    <div data-role="navbar">
+      <ul>
+	<li><button class="settings" data-icon="gear">设置</button></li>
+        <li> <a href="#part_test" data-icon="info">抽查测验</a></li>
+        <li> <a href="javascript:history.back(-1)" data-icon="back">返回</a></li>      </ul>
+    </div> <!-- navbar -->
+  </div><!-- header -->
+  <div data-role="content">
+    <div class="ui-grid-a">
+      <div class="ui-block-a">
+        <button id="btn_show_zi_fail" data-inline="true" style="width: 100%;">显示没有通过的字</button>
+      </div>
+      <div class="ui-block-b">
+        <button id="btn_test_zi_fail" data-inline="true" style="width: 100%;">测试没有通过的字</button>
+      </div>
+    </div><!-- ui-grid-a -->
+    <p id="par_zi_fail" class="par" style="text-align: center; margin: 0px;"></p>
+  </div><!-- content -->
+</div><!-- page -->
+
+<div data-role="page" id="part_test">
+  <div data-role="header">
+    <a href="#one_first" data-icon="home">目录</a>
+    <h1>抽查测验</h1>
+    <button data-role="button"class="ui-btn-right"><span class="ui-li-count right-top-count" style="position: relative; right: 0em;"></span></button>
+    <div data-role="navbar">
+      <ul>
+	<li><button class="settings" data-icon="gear">设置</button></li>
+        <li><a href="#zi_fail" data-icon="info">错题本</a></li>
+        <li> <a href="javascript:history.back(-1)" data-icon="back">返回</a></li>      </ul>
+    </div> <!-- navbar -->
+  </div><!-- header -->
+  <div data-role="content">
+    <form method="post" action="#part_test">
+      <div data-role="fieldcontain">
+        <label for="select_unit">选择单元：</label>
+        <select name="select_unit" id="select_unit" multiple="multiple" data-native-menu="false">
+	  <option>单元</option>
+	  <option value="zi_0101_pinyin_review_1">拼音一</option>
+	  <option value="zi_0101_pinyin_review_2_1">拼音二</option>
+	  <option value="zi_0101_pinyin_review_3_1">拼音三</option>
+	  <option value="zi_0101_pinyin_review_4_1">拼音四</option>
+	  <option value="zi_0101_unit_1_1">第一单元（识字）</option>
+	  <option value="zi_0101_unit_2_1">第二单元（课文）</option>
+	  <option value="zi_0101_unit_3_1">第三单元（课文）</option>
+	  <option value="zi_0101_unit_4_1">第四单元（识字）</option>
+	  <option value="zi_0101_unit_5_1">第五单元（课文）</option>
+	  <option value="zi_0101_unit_6_1">第六单元（课文）</option>
+        </select>
+      </div><!-- fieldcontain -->
+      <div data-role="fieldcontain">
+        <label for="part_test_entry_num">测试题数：</label>
+        <input type="range" name="part_test_entry_num" id="part_test_entry_num" value="10" min="0" max="200">
+      </div>
+      <input type="button" data-inline="true" value="开始测试" id="begin_org">
+    </form>
+    <p id="par_part_test" class="par" style="text-align: center; margin: 0px;"></p>
+  </div><!-- content -->
+</div><!-- page -->
+
+</body>
+</html>
